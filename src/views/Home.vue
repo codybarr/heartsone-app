@@ -3,7 +3,11 @@
         <h1>Search...</h1>
         <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
         <form>
-            <input v-model="query" class="form-control form-control-lg" type="text" placeholder="Search...">
+            <input v-model="query"
+                @keydown.enter.prevent
+                class="form-control form-control-lg"
+                type="text"
+                placeholder="Search...">
         </form>
         <br>
         <div v-if="isLoading">
@@ -12,7 +16,7 @@
             </transition>
         </div>
         <div v-else>
-            <div v-if="filteredCards.length === 0"> 
+            <div v-if="filteredCards.length === 0">
                 <p>No cards were found...</p>
             </div>
             <table v-else class="table table-hover table-bordered table-sm">
@@ -26,7 +30,7 @@
                     <th>Health</th>
                 </thead>
                 <tbody>
-                    <tr v-for="(card, index) in filteredCards">
+                    <tr v-for="(card, index) in filteredCards" :key="card.id">
                         <td>{{ index+1 }}</td>
                         <td>
                             <router-link :to="`/card/${card.dbfId}/${sanitize(card.name)}`">
@@ -42,22 +46,18 @@
                 </tbody>
             </table>
         </div>
-        
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
-import HelloWorld from '@/components/HelloWorld.vue';
-import Loader from '@/components/Loader.vue';
-
-import _ from 'lodash';
+import Loader from '@/components/Loader.vue'
 
 export default {
     name: 'home',
     components: {
-        HelloWorld,
         Loader
     },
     computed: {
@@ -77,8 +77,8 @@ export default {
     methods: {
         sanitize(value) {
             return value.toLowerCase().replace(/ /g, '-')
-        },
-    },
-};  
+        }
+    }
+}
 
 </script>
