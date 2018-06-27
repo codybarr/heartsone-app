@@ -61,12 +61,10 @@ const mutations = {
         state.isLoading = true
     },
     [SET_CARDS](state, cards) {
-        console.log('Cards: ', cards)
         state.cards = cards
         state.isLoading = false
     },
     [SET_CARD](state, card) {
-        console.log('Card:', card)
         state.card = card
         state.isLoading = false
     }
