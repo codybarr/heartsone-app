@@ -7,7 +7,7 @@
     </div>
     <div v-if="card">
         <h1>{{ card.name }}</h1>
-        <img :src="`/card-images/${card.dbfId}.png`">
+        <img :src="`/images/card-images/${card.dbfId}.png`">
     </div>
   </div>
 </template>
