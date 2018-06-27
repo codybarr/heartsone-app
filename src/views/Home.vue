@@ -32,11 +32,7 @@
                 <tbody>
                     <tr v-for="(card, index) in filteredCards" :key="card.id">
                         <td>{{ index+1 }}</td>
-                        <td>
-                            <router-link :to="`/card/${card.dbfId}/${sanitize(card.name)}`">
-                                {{ card.name }}
-                            </router-link>
-                        </td>
+                        <td><CardLink :card="card"></CardLink></td>
                         <td>{{ card.type | capitalize }}</td>
                         <td>{{ card.cardClass | capitalize }}</td>
                         <td>{{ card.cost }}</td>
@@ -53,11 +49,13 @@
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
+import CardLink from '@/components/CardLink.vue'
 import Loader from '@/components/Loader.vue'
 
 export default {
     name: 'home',
     components: {
+        CardLink,
         Loader
     },
     computed: {
@@ -72,11 +70,6 @@ export default {
     data() {
         return {
             query: ''
-        }
-    },
-    methods: {
-        sanitize(value) {
-            return value.toLowerCase().replace(/ /g, '-')
         }
     }
 }

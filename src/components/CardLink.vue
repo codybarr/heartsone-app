@@ -1,0 +1,71 @@
+<template>
+    <div>
+        <div class="card-tooltip" v-if="hovering">
+            <img :src="image" :style="{ top: y + 'px', left: x + 'px' }"/>
+        </div>
+        <router-link :to="`/card/${card.dbfId}/${sanitize(card.name)}`"
+            @mouseover.native="hover"
+            @mousemove.native="moved"
+            @mouseleave.native="leave">
+            {{ card.name }}
+        </router-link>
+    </div>
+</template>
+
+<script>
+// import _ from 'lodash'
+const CARD_WIDTH = 286
+const CARD_HEIGHT = 395
+const CURSOR_PADDING = 100
+
+export default {
+    name: 'CardLink',
+    props: ['to', 'card'],
+    data() {
+        return {
+            hovering: false,
+            image: '',
+            x: 0,
+            y: 0
+        }
+    },
+    methods: {
+        sanitize(value) {
+            return value.toLowerCase().replace(/:/g, '').replace(/ /g, '-')
+        },
+        hover(e) {
+            this.image = `/images/card-images/${this.card.dbfId}.png`
+            this.setTooltipPosition(e.clientX, e.clientY)
+
+            this.hovering = true
+        },
+        moved(e) {
+            this.setTooltipPosition(e.clientX, e.clientY)
+        },
+        leave() {
+            this.hovering = false
+        },
+        setTooltipPosition(x, y) {
+            // Set X
+            this.x = x > (window.innerWidth / 2)
+                ? x - CURSOR_PADDING - CARD_WIDTH
+                : x + CURSOR_PADDING
+
+            // Set Y
+            if (y < (window.innerHeight / 3)) {
+                this.y = y
+            } else if (y > (window.innerHeight / 3) && y < ((window.innerHeight / 3) * 2)) {
+                this.y = y - (CARD_HEIGHT / 2)
+            } else {
+                this.y = y - CARD_HEIGHT
+            }
+        }
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.card-tooltip img {
+    position: fixed;
+}
+</style>
