@@ -10,7 +10,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-                    <router-link to="/" class="nav-link">Home</router-link>
+                    <router-link to="/" class="nav-link">Search</router-link>
                 </li>
                 <li class="nav-item">
                     <!-- <a class="nav-link" href="#">Link</a> -->
