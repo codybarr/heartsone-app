@@ -17,7 +17,7 @@
 
 <script>
 // import _ from 'lodash'
-import ExpansionMixin from '@/common/expansion.mixin.js'
+import ExpansionMixin from '@/common/expansion.mixin'
 
 const CARD_WIDTH = 286
 const CARD_HEIGHT = 395
@@ -69,48 +69,21 @@ export default {
     },
     computed: {
         slug() {
-            let tempSlug = this.card.name.toLowerCase().replace(/:/g, '').replace(/ /g, '-')
-            return '/card/' + this.card.dbfId + '/' + tempSlug
+            const tempSlug = this.card.name.toLowerCase().replace(/:/g, '').replace(/ /g, '-')
+            return `/card/${this.card.dbfId}/${tempSlug}`
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 .card-tooltip img {
     position: fixed;
 }
 
-// Card Set/Expansion Styles
-[data-set-icon] {
-    padding-left: 30px;
-    display: inline-block;
-}
-@each $icon in spider, goblin, mountain, shield-crown, hat, eye, music, brass-knuckles, dino-footprint, icecrown, candle, spooky-tree {
-    &[data-set-icon='#{$icon}'] {
-        background: url('/images/expansions/#{$icon}.png') no-repeat 0 0;
-    }
-}
-[data-set-icon='hat'] {
-    background-position-y: 5px;
-}
-
-
 // Card Rarity Styles
 [data-card-rarity] {
     font-weight: bold;
-}
-[data-card-rarity='common'], [data-card-rarity='free'] {
-    color: #0FAF03;
-}
-[data-card-rarity='rare'] {
-    color: #198EFF;
-}
-[data-card-rarity='epic'] {
-    color: #AB48EE;
-}
-[data-card-rarity='legendary'] {
-    color: #F07000;
 }
 </style>

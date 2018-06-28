@@ -36,7 +36,12 @@
                         <td class="text-center">{{ card.rarity | capitalize }}</td>
                         <td class="text-center">{{ card.type | capitalize }}</td>
                         <td class="text-center">{{ card.cardClass | capitalize }}</td>
-                        <td class="text-center">{{ card.cost }} <span v-if="card.cost >= 0" class="hearthstone-icon icon-mana"></span></td>
+                        <td class="text-center">
+                            {{ card.cost }}
+                            <span v-if="card.cost >= 0"
+                                class="hearthstone-icon icon-mana">
+                            </span>
+                        </td>
                         <td class="text-center">
                             <AttackIcon :attack="card.attack" :type="card.type"></AttackIcon>
                         </td>
@@ -77,11 +82,18 @@ export default {
             'cards'
         ])
     },
+    data() {
+        return {
+            query: '',
+            localLoading: false,
+            filteredCards: []
+        }
+    },
     watch: {
-        cards: function() {
+        cards: function cards() {
             this.filterCards()
         },
-        query: function() {
+        query: function query() {
             this.localLoading = true
             this.debouncedQuery()
         }
@@ -92,15 +104,8 @@ export default {
     mounted() {
         this.filterCards()
     },
-    data() {
-        return {
-            query: '',
-            localLoading: false,
-            filteredCards: []
-        }
-    },
     methods: {
-        filterCards: function() {
+        filterCards() {
             this.filteredCards = _.sortBy(this.cards
                 .filter(card => card.name.toLowerCase().includes(this.query)), 'name')
             this.localLoading = false
