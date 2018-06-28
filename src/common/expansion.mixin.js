@@ -105,12 +105,10 @@ export default {
             // if (HEARTHSTONE_SETS[this.card.set].hasOwnProperty('icon') == undefined) {
             //     console.log(this.card)
             // }
-            if (HEARTHSTONE_SETS[this.card.set].hasOwnProperty('icon')) {
-                return HEARTHSTONE_SETS[this.card.set].icon
-            }
-            else {
-                return ''
-            }
+            return HEARTHSTONE_SETS[this.card.set].icon
+        },
+        expansionName() {
+            return HEARTHSTONE_SETS[this.card.set].name
         }
     }
 }
