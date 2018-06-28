@@ -24,6 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
+// Resource Icons
 .hearthstone-icon {
     background: url('/images/hearthstone-icons.png') center center no-repeat;
     overflow: hidden;
@@ -54,5 +55,35 @@ export default {
     &.icon-weapon-durability {
         background-position: -20px -64px;
     }
+}
+
+//
+// Card Set/Expansion Styles
+[data-set-icon] {
+    padding-left: 30px;
+    display: inline-block;
+}
+@each $icon in spider, goblin, mountain, shield-crown,
+    hat, eye, music, brass-knuckles, dino-footprint, icecrown, candle, spooky-tree {
+    &[data-set-icon='#{$icon}'] {
+        background: url('/images/expansions/#{$icon}.png') no-repeat 0 0;
+    }
+}
+[data-set-icon='hat'] {
+    background-position-y: 5px;
+}
+
+// Rarity colors
+[data-card-rarity='common'], [data-card-rarity='free'] {
+    color: #0FAF03;
+}
+[data-card-rarity='rare'] {
+    color: #198EFF;
+}
+[data-card-rarity='epic'] {
+    color: #AB48EE;
+}
+[data-card-rarity='legendary'] {
+    color: #F07000;
 }
 </style>
