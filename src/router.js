@@ -6,7 +6,7 @@ import Card from './views/Card.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     routes: [{
         path: '/',
         name: 'search',
@@ -23,3 +23,19 @@ export default new Router({
         component: Card
     }]
 })
+
+router.beforeResolve((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.name) {
+      // Start the route progress bar.
+      NProgress.start()
+  }
+  next()
+})
+
+router.afterEach((to, from) => {
+  // Complete the animation of the route progress bar.
+  NProgress.done()
+})
+
+export default router
