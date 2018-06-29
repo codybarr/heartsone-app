@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Search from './views/Search.vue'
-import About from './views/About.vue'
+import Decks from './views/Decks.vue'
 import Card from './views/Card.vue'
 
 Vue.use(Router)
@@ -13,16 +13,23 @@ const router = new Router({
         component: Search
     },
     {
-        path: '/about',
-        name: 'about',
-        component: About
+        path: '/decks',
+        name: 'decks',
+        component: Decks
     },
     {
         path: '/card/:id/:name?',
         name: 'card',
         component: Card
+    },
+    {
+        path: '*',
+        redirect: '/'
     }]
 })
+
+// NProgress settings
+NProgress.configure({ showSpinner: false });
 
 router.beforeResolve((to, from, next) => {
   // If this isn't an initial page load.

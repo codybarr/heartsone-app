@@ -3,11 +3,34 @@
         <h1>Search...</h1>
         <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
         <form>
-            <input v-model="query"
-                @keydown.enter.prevent
-                class="form-control form-control-lg"
-                type="text"
-                placeholder="Search...">
+            <div class="form-group">
+                <input v-model="query"
+                    @keydown.enter.prevent
+                    class="form-control form-control-lg"
+                    type="text"
+                    placeholder="Search...">
+            </div>
+            <div class="collapse" id="advancedSearch">
+                <div class="card card-body">
+                    <div class="form-group row">
+                        <div class="col-sm-2 font-weight-bold">Class</div>
+                        <div class="col-sm-10">
+                            <div class="form-check-inline" v-for="(cardClass, index) in classes" :key="index">
+                                <input class="form-check-input"
+                                    type="checkbox" 
+                                    :value="cardClass | lowercase" 
+                                    :id="'class-' + cardClass | capitalize"
+                                    v-model="checkedCardClasses">
+                                <label class="form-check-label" :for="'class-' + cardClass | lowercase">
+                                    {{ cardClass | capitalize}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <p>You have checked: {{ checkedCardClasses }}</p> -->
+                </div>
+            </div>
+            <a class="float-right" data-toggle="collapse" href="#advancedSearch" role="button" aria-expanded="false" aria-controls="advancedSearch">Advanced Search</a>
         </form>
         <br>
         <div v-if="isLoading || localLoading">
@@ -74,6 +97,8 @@ import CardLink from '@/components/CardLink.vue'
 import AttackIcon from '@/components/AttackIcon.vue'
 import HealthIcon from '@/components/HealthIcon.vue'
 
+import CLASSES from '@/common/data/classes'
+
 export default {
     name: 'search',
     mixins: [SetMixin],
@@ -105,7 +130,10 @@ export default {
             localLoading: false,
             filteredCards: [],
             totalFilteredCards: 0,
-            perPage: 50
+            perPage: 50,
+
+            classes: CLASSES,
+            checkedCardClasses: []
         }
     },
     watch: {
@@ -117,7 +145,12 @@ export default {
             this.$router.push({ query: { page: 1 } })
             this.debouncedQuery()
         },
+        checkedCardClasses: function checkedCardClasses() {
+            this.localLoading = true
+            this.debouncedQuery()
+        },
         $route: function routeUpdate() {
+            this.localLoading = true
             this.filterCards()
         }
     },
@@ -129,10 +162,17 @@ export default {
     },
     methods: {
         filterCards() {
-            const tempFilter = _.sortBy(this.cards
-                .filter(card => card.name.toLowerCase().includes(this.query.toLowerCase())), 'name')
+            let tempFilter = this.cards
+                .filter(card => card.name.toLowerCase().includes(this.query.toLowerCase()))
+
+            if (this.checkedCardClasses.length > 0) {
+                tempFilter = tempFilter
+                    .filter(card => this.checkedCardClasses.indexOf(card.cardClass.toLowerCase()) > -1)
+            }
 
             this.totalFilteredCards = tempFilter.length
+
+            tempFilter = _.sortBy(tempFilter, 'name')
 
             this.filteredCards = tempFilter.slice(this.start, this.end)
             this.localLoading = false
@@ -150,4 +190,7 @@ table thead th {
     white-space: nowrap;
 }
 
+#advancedSearch .form-group {
+    margin-bottom: 0;
+}
 </style>
