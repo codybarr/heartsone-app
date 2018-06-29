@@ -44,7 +44,7 @@
                             </tr>
                             <tr>
                                 <th>Set</th>
-                                <td><span :data-set-icon="icon">{{ expansionName }}</span></td>
+                                <td><span :data-set-icon="card.set | setIcon">{{ card.set | setName }}</span></td>
                             </tr>
                             <tr>
                                 <th>Class</th>
@@ -78,7 +78,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ExpansionMixin from '@/common/expansion.mixin'
+import SetMixin from '@/common/set.mixin'
 
 import Loader from '@/components/Loader.vue'
 import AttackIcon from '@/components/AttackIcon.vue'
@@ -86,7 +86,7 @@ import HealthIcon from '@/components/HealthIcon.vue'
 
 export default {
     name: 'card',
-    mixins: [ExpansionMixin],
+    mixins: [SetMixin],
     components: {
         Loader,
         AttackIcon,

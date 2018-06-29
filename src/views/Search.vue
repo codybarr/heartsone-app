@@ -14,10 +14,13 @@
             <Loader/>
         </div>
         <div v-else>
+            <div>
+                <Pager :page="page" :perPage="perPage" :total="totalFilteredCards"></Pager>
+            </div>
             <div v-if="filteredCards.length === 0">
                 <p>No cards were found...</p>
             </div>
-            <table v-else class="table table-hover table-bordered table-sm">
+            <table v-else class="table table-hover table-bordered table-sm table-responsive-md">
                 <thead class="thead-dark">
                     <th>Row #</th>
                     <th>Card Name</th>
@@ -31,8 +34,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="(card, index) in filteredCards" :key="card.id">
-                        <td>{{ index+1 }}</td>
-                        <td><CardLink :card="card"></CardLink></td>
+                        <td>{{ start+index+1 }}</td>
+                        <td id="hearthstone-card-name"><CardLink :card="card"></CardLink></td>
                         <td class="text-center">{{ card.rarity | capitalize }}</td>
                         <td class="text-center">{{ card.type | capitalize }}</td>
                         <td class="text-center">{{ card.cardClass | capitalize }}</td>
@@ -51,7 +54,7 @@
                                 :type="card.type">
                             </HealthIcon>
                         </td>
-                        <td>{{ card.set }}</td>
+                        <td><span :title="card.set | setName">{{ card.set }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -63,6 +66,9 @@
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
+import SetMixin from '@/common/set.mixin'
+
+import Pager from '@/components/Pager.vue'
 import Loader from '@/components/Loader.vue'
 import CardLink from '@/components/CardLink.vue'
 import AttackIcon from '@/components/AttackIcon.vue'
@@ -70,13 +76,24 @@ import HealthIcon from '@/components/HealthIcon.vue'
 
 export default {
     name: 'search',
+    mixins: [SetMixin],
     components: {
+        Pager,
         Loader,
         CardLink,
         AttackIcon,
         HealthIcon
     },
     computed: {
+        page() {
+            return Number(this.$route.query.page) || 1
+        },
+        start() {
+            return (this.page - 1) * this.perPage
+        },
+        end() {
+            return this.start + this.perPage
+        },
         ...mapGetters([
             'isLoading',
             'cards'
@@ -86,7 +103,9 @@ export default {
         return {
             query: '',
             localLoading: false,
-            filteredCards: []
+            filteredCards: [],
+            totalFilteredCards: 0,
+            perPage: 50
         }
     },
     watch: {
@@ -95,7 +114,11 @@ export default {
         },
         query: function query() {
             this.localLoading = true
+            this.$router.push({ query: { page: 1 } })
             this.debouncedQuery()
+        },
+        $route: function routeUpdate() {
+            this.filterCards()
         }
     },
     created() {
@@ -106,14 +129,25 @@ export default {
     },
     methods: {
         filterCards() {
-            this.filteredCards = _.sortBy(this.cards
-                .filter(card => card.name.toLowerCase().includes(this.query)), 'name')
+            const tempFilter = _.sortBy(this.cards
+                .filter(card => card.name.toLowerCase().includes(this.query.toLowerCase())), 'name')
+
+            this.totalFilteredCards = tempFilter.length
+
+            this.filteredCards = tempFilter.slice(this.start, this.end)
             this.localLoading = false
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+table thead th {
+    white-space: nowrap;
+}
+
+#hearthstone-card-name {
+    white-space: nowrap;
+}
 
 </style>
