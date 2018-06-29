@@ -100,15 +100,14 @@ const HEARTHSTONE_SETS = {
 }
 
 export default {
-    computed: {
-        icon() {
-            // if (HEARTHSTONE_SETS[this.card.set].hasOwnProperty('icon') == undefined) {
-            //     console.log(this.card)
-            // }
-            return HEARTHSTONE_SETS[this.card.set].icon
+    filters: {
+        setIcon(set) {
+            if (!set) return ''
+            return HEARTHSTONE_SETS[set].icon
         },
-        expansionName() {
-            return HEARTHSTONE_SETS[this.card.set].name
+        setName(set) {
+            if (!set) return ''
+            return HEARTHSTONE_SETS[set].name
         }
     }
 }

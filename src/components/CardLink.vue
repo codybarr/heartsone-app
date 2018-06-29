@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="card-tooltip" v-if="hovering">
+        <div class="card-tooltip" v-show="hovering">
             <img :src="image" :style="{ top: y + 'px', left: x + 'px' }"/>
         </div>
         <router-link :to="slug"
             class="link-text"
             :data-card-rarity="card.rarity | lowercase"
-            :data-set-icon="icon"
+            :data-set-icon="card.set | setIcon"
             @mouseover.native="hover"
             @mousemove.native="moved"
             @mouseleave.native="leave">
@@ -17,7 +17,7 @@
 
 <script>
 // import _ from 'lodash'
-import ExpansionMixin from '@/common/expansion.mixin'
+import SetMixin from '@/common/set.mixin'
 
 const CARD_WIDTH = 286
 const CARD_HEIGHT = 395
@@ -26,7 +26,7 @@ const CURSOR_PADDING = 100
 export default {
     name: 'CardLink',
     props: ['to', 'card'],
-    mixins: [ExpansionMixin],
+    mixins: [SetMixin],
     data() {
         return {
             hovering: false,
