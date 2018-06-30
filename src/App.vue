@@ -74,16 +74,29 @@ export default {
 }
 
 // Rarity colors
-[data-card-rarity='common'], [data-card-rarity='free'] {
-    color: #0FAF03;
+[data-card-rarity='free'] {
+    &, &:hover {
+        color: #000000;
+    }
+}
+[data-card-rarity='common'] {
+    &, &:hover {
+        color: #0FAF03;
+    }
 }
 [data-card-rarity='rare'] {
-    color: #198EFF;
+    &, &:hover {
+        color: #198EFF;
+    }
 }
 [data-card-rarity='epic'] {
-    color: #AB48EE;
+    &, &:hover {
+        color: #AB48EE;
+    }
 }
 [data-card-rarity='legendary'] {
-    color: #F07000;
+    &, &:hover {
+        color: #F07000;
+    }
 }
 </style>

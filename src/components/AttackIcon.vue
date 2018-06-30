@@ -1,7 +1,7 @@
 <template>
     <span>
         {{ attack }}
-        <span v-if="attack >= 0" 
+        <span v-if="attack >= 0"
             :class="['hearthstone-icon', isWeapon ? 'icon-weapon-attack' : 'icon-attack']">
         </span>
 </span>
@@ -13,7 +13,7 @@ export default {
     props: ['attack', 'type'],
     computed: {
         isWeapon() {
-            return this.type.toLowerCase() === "weapon"
+            return this.type.toLowerCase() === 'weapon'
         }
     }
 }
