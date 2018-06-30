@@ -7,68 +7,95 @@
                 <div class="col-sm-10">
                     <input v-model="query"
                         @keydown.enter.prevent
-                        class="form-control form-control-lg"
+                        class="form-control"
                         type="text"
                         placeholder="Search...">
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-danger btn-lg btn-block" @click.prevent="reset">
+                    <button class="btn btn-danger btn-block" @click.prevent="reset">
                         Reset
                     </button>
                 </div>
             </div>
             <div class="collapse" id="advancedSearch">
                 <div class="card card-body">
-                    <!-- Class Filter checkboxes -->
-                    <div class="form-group row">
-                        <div class="col-sm-2 font-weight-bold">Class</div>
-                        <div class="col-sm-10">
-                            <div class="form-check-inline"
-                                v-for="(cardClass, index) in classes"
-                                :key="index">
-                                <input class="form-check-input"
-                                    type="checkbox"
-                                    :value="cardClass | lowercase"
-                                    :id="'class-' + cardClass | capitalize"
-                                    v-model="checkedCardClasses">
-                                <label class="form-check-label"
-                                    :for="'class-' + cardClass | lowercase">
-                                    {{ cardClass | capitalize}}
-                                </label>
+                    <div class="row">
+                        <div class="col-sm">
+                            <!-- Class Filter checkboxes -->
+                            <div class="form-group row">
+                                <div class="col-sm-2 font-weight-bold">Class</div>
+                                <div class="col-sm-10">
+                                    <div class="form-check-inline"
+                                        v-for="(cardClass, index) in classes"
+                                        :key="index">
+                                        <input class="form-check-input"
+                                            type="checkbox"
+                                            :value="cardClass | lowercase"
+                                            :id="'class-' + cardClass | capitalize"
+                                            v-model="checkedCardClasses">
+                                        <label class="form-check-label"
+                                            :for="'class-' + cardClass | lowercase">
+                                            {{ cardClass | capitalize}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Type Filter checkboxes -->
+                            <div class="form-group row">
+                                <div class="col-sm-2 font-weight-bold">Type</div>
+                                <div class="col-sm-10">
+                                    <div class="form-check-inline"
+                                        v-for="(cardType, index) in types"
+                                        :key="index">
+                                        <input class="form-check-input"
+                                            type="checkbox"
+                                            :value="cardType | lowercase"
+                                            :id="'class-' + cardType | capitalize"
+                                            v-model="checkedCardTypes">
+                                        <label class="form-check-label"
+                                            :for="'class-' + cardType | lowercase">
+                                            {{ cardType | capitalize}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Rarity Filter checkboxes -->
+                            <div class="form-group row">
+                                <div class="col-sm-2 font-weight-bold">Rarity</div>
+                                <div class="col-sm-10">
+                                    <div class="form-check-inline"
+                                        v-for="(rarity, index) in rarities"
+                                        :key="index">
+                                        <input class="form-check-input"
+                                            type="checkbox"
+                                            :value="rarity | lowercase"
+                                            :id="'class-' + rarity | lowercase"
+                                            v-model="checkedRarities">
+                                        <label class="form-check-label"
+                                            :for="'class-' + rarity | lowercase">
+                                            {{ rarity | capitalize}}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Card Type Filter checkboxes -->
-                    <div class="form-group row">
-                        <div class="col-sm-2 font-weight-bold">Type</div>
-                        <div class="col-sm-10">
-                            <div class="form-check-inline"
-                                v-for="(cardType, index) in types"
-                                :key="index">
-                                <input class="form-check-input"
-                                    type="checkbox"
-                                    :value="cardType | lowercase"
-                                    :id="'class-' + cardType | capitalize"
-                                    v-model="checkedCardTypes">
-                                <label class="form-check-label"
-                                    :for="'class-' + cardType | lowercase">
-                                    {{ cardType | capitalize}}
-                                </label>
+                        <div class="col-sm">
+                            <!-- Card Set Filter multiselect -->
+                            <div class="form-group row">
+                                <div class="col-sm-2 font-weight-bold">Card Set</div>
+                                <div class="col-sm-10">
+                                    <select v-model="selectedCardSets"
+                                        class="custom-select"
+                                        multiple>
+                                        <option v-for="(cardSet, index) in sets"
+                                            :key="index"
+                                            :value="cardSet"
+                                            :id="'set-' + cardSet | lowercase">
+                                            {{ cardSet | setName }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Card Set Filter multiselect -->
-                    <div class="form-group row">
-                        <div class="col-sm-2 font-weight-bold">Card Set</div>
-                        <div class="col-sm-10">
-                            <select v-model="selectedCardSets" class="custom-select" multiple>
-                                <option v-for="(cardSet, index) in sets"
-                                    :key="index"
-                                    :value="cardSet"
-                                    :id="'set-' + cardSet | lowercase">
-                                    {{ cardSet | setName }}
-                                </option>
-                            </select>
                         </div>
                     </div>
                     <!-- <p>You have checked: {{ selectedCardSets }}</p> -->
@@ -84,13 +111,12 @@
             </a>
         </form>
         <br>
+        <Pager :page="page" :perPage="perPage" :total="totalFilteredCards"></Pager>
+        <br>
         <div v-if="isLoading || localLoading">
             <Loader/>
         </div>
         <div v-else>
-            <div>
-                <Pager :page="page" :perPage="perPage" :total="totalFilteredCards"></Pager>
-            </div>
             <div v-if="filteredCards.length === 0">
                 <p>No cards were found...</p>
             </div>
@@ -201,6 +227,7 @@ import SortIcon from '@/components/SortIcon.vue'
 import CLASSES from '@/common/data/classes'
 import TYPES from '@/common/data/types'
 import SETS from '@/common/data/sets'
+import RARITIES from '@/common/data/rarities'
 
 export default {
     name: 'search',
@@ -245,13 +272,16 @@ export default {
             sets: Object.keys(SETS),
             selectedCardSets: [],
 
+            rarities: RARITIES,
+            checkedRarities: [],
+
             sortField: 'name',
             sortAscending: true
         }
     },
     watch: {
         cards: function cards() {
-            this.filterCards()
+            this.debouncedQuery()
         },
         query: function query() {
             this.localLoading = true
@@ -268,6 +298,11 @@ export default {
             this.$router.push({ query: { } })
             this.debouncedQuery()
         },
+        checkedRarities: function checkedRarities() {
+            this.localLoading = true
+            this.$router.push({ query: { } })
+            this.debouncedQuery()
+        },
         selectedCardSets: function selectedCardSets() {
             this.localLoading = true
             this.$router.push({ query: { } })
@@ -275,7 +310,7 @@ export default {
         },
         $route: function routeUpdate() {
             this.localLoading = true
-            this.filterCards()
+            this.debouncedQuery()
         }
     },
     created() {
@@ -310,6 +345,12 @@ export default {
                 tempFilter = tempFilter
                     .filter(card => this.checkedCardTypes
                         .indexOf(card.type.toLowerCase()) > -1)
+            }
+
+            if (this.checkedRarities.length > 0) {
+                tempFilter = tempFilter
+                    .filter(card => this.checkedRarities
+                        .indexOf(card.rarity.toLowerCase()) > -1)
             }
 
             if (this.selectedCardSets.length > 0) {
