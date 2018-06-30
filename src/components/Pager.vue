@@ -1,7 +1,5 @@
 <template>
     <div>
-        <p>Displaying results {{ start+1 }}-{{ lastPage ? total : end+1 }} of {{ total }}</p>
-
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <!-- First -->
@@ -39,6 +37,11 @@
                 </li>
             </ul>
         </nav>
+        <p>
+            <small>
+                Displaying results {{ start+1 }}-{{ lastPage ? total : end+1 }} of {{ total }}
+            </small>
+        </p>
     </div>
 </template>
 

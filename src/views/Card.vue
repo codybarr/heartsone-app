@@ -44,7 +44,9 @@
                             </tr>
                             <tr>
                                 <th>Set</th>
-                                <td><span :data-set-icon="card.set | setIcon">{{ card.set | setName }}</span></td>
+                                <td><span :data-set-icon="card.set | setIcon">
+                                    {{ card.set | setName }}
+                                </span></td>
                             </tr>
                             <tr>
                                 <th>Class</th>

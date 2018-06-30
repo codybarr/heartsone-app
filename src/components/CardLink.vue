@@ -78,8 +78,13 @@ export default {
 
 <style scoped lang="scss">
 
+a:hover {
+    text-decoration: none !important;
+}
+
 .card-tooltip img {
     position: fixed;
+    z-index: 10;
 }
 
 // Card Rarity Styles
