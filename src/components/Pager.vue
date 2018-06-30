@@ -39,7 +39,7 @@
         </nav>
         <p>
             <small>
-                Displaying results {{ start+1 }}-{{ lastPage ? total : end+1 }} of {{ total }}
+                Displaying results {{ start+1 }}-{{ lastPage ? total : end }} of {{ total }}
             </small>
         </p>
     </div>
