@@ -37,11 +37,9 @@
                 </li>
             </ul>
         </nav>
-        <p>
-            <small>
-                Displaying results {{ start+1 }}-{{ lastPage ? total : end }} of {{ total }}
-            </small>
-        </p>
+        <small>
+            Displaying results {{ start+1 }}-{{ lastPage ? total : end }} of {{ total }}
+        </small>
     </div>
 </template>
 

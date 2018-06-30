@@ -393,8 +393,4 @@ table thead th {
 #hearthstone-card-name {
     white-space: nowrap;
 }
-
-#advancedSearch .form-group {
-    margin-bottom: 0;
-}
 </style>
