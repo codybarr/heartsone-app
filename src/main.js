@@ -7,7 +7,10 @@ import { FETCH_CARDS } from '@/store/actions.type'
 /* Imports */
 // Font-Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+// consider 'gem' for mana, 'shield-alt' for durability,
+// heart or possibly 'tint' for health
+// no sword yet https://github.com/FortAwesome/Font-Awesome/issues/1449
+import { faSort, faSortUp, faSortDown, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // Filters
@@ -16,7 +19,7 @@ import LowerCaseFilter from '@/common/lowercase.filter'
 
 /* Add to Vue */
 // Font-Awesome
-library.add(faSort, faSortUp, faSortDown)
+library.add(faSort, faSortUp, faSortDown, faHeart)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Filters
