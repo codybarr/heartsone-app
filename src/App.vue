@@ -1,19 +1,22 @@
 <template>
     <div id="app">
         <Navbar :title="title" />
-        <div class="container-fluid">
+        <div class="container-fluid content">
             <router-view/>
         </div>
+        <Footer />
     </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
     name: 'home',
     components: {
-        Navbar
+        Navbar,
+        Footer
     },
     data() {
         return {
@@ -57,7 +60,6 @@ export default {
     }
 }
 
-//
 // Card Set/Expansion Styles
 [data-set-icon] {
     padding-left: 30px;

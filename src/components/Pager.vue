@@ -69,22 +69,24 @@ export default {
             // LOGIC HERE SHOULD PROBABLY BE CLEANED UP...BUT IT SEEMS TO WORK FOR NOW
 
             // default - show entire range
-            let range = _.range(1, this.totalPages+1)
+            let range = _.range(1, this.totalPages + 1)
 
             // if the range is greater than the limit then we need to truncate it
             if (range.length > this.limit) {
-                // if the current page is less then the limit, splice the array from the beginning
                 if (this.page < this.limit) {
+                    // if the current page is less then the limit,
+                    // splice the array from the beginning
                     range = range.slice(0, this.limit)
-                }
-                // if the current page is less than the total pages less the limit, splice the array from the end
-                else if (this.page > (this.totalPages - this.limit + 1)) {
+                } else if (this.page > (this.totalPages - this.limit + 1)) {
+                    // if the current page is less than the total pages less the limit,
+                    // splice the array from the end
                     range = range.slice((this.totalPages - this.limit), this.totalPages)
-                }
-                // otherwise we're in the middle
-                else {
-                    range = range.slice(this.page - (Math.floor(this.limit / 2) + 1), 
-                        this.page + Math.floor(this.limit / 2))
+                } else {
+                    // otherwise we're in the middle
+                    range = range.slice(
+                        this.page - (Math.floor(this.limit / 2) + 1),
+                        this.page + Math.floor(this.limit / 2)
+                    )
                 }
             }
 

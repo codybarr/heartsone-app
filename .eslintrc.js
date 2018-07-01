@@ -13,6 +13,7 @@ module.exports = {
         'semi': ['error', 'never'],
         'comma-dangle': ['error', 'never'],
         'indent': ['error', 4],
+        'no-mixed-operators': ['error', { 'allowSamePrecedence': true }],
         'max-len': ['error', { 'code': 100, 'ignoreStrings': true }]
     },
     parserOptions: {
