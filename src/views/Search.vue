@@ -281,7 +281,7 @@ export default {
     },
     watch: {
         cards: function cards() {
-            this.debouncedQuery()
+            this.filterCards()
         },
         query: function query() {
             this.localLoading = true
@@ -291,26 +291,26 @@ export default {
         checkedCardClasses: function checkedCardClasses() {
             this.localLoading = true
             this.$router.push({ query: { } })
-            this.debouncedQuery()
+            this.filterCards()
         },
         checkedCardTypes: function checkedCardTypes() {
             this.localLoading = true
             this.$router.push({ query: { } })
-            this.debouncedQuery()
+            this.filterCards()
         },
         checkedRarities: function checkedRarities() {
             this.localLoading = true
             this.$router.push({ query: { } })
-            this.debouncedQuery()
+            this.filterCards()
         },
         selectedCardSets: function selectedCardSets() {
             this.localLoading = true
             this.$router.push({ query: { } })
-            this.debouncedQuery()
+            this.filterCards()
         },
         $route: function routeUpdate() {
             this.localLoading = true
-            this.debouncedQuery()
+            this.filterCards()
         }
     },
     created() {
