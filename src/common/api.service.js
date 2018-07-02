@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as localforage from 'localforage'
+import firebase from 'firebase/app'
 
 // eslint-disable-next-line
 export const CardService = {
@@ -31,5 +32,27 @@ export const CardService = {
             // console.log('grabbing cards from lstorage', cards)
             return Promise.resolve({ data: cards })
         })
+    }
+}
+
+export const UserService = {
+    login() {
+        console.log('kicking off the login...')
+        // firebase.initializeApp(FIREBASE_CONFIG)
+        const provider = new firebase.auth.GoogleAuthProvider()
+        return firebase.auth().signInWithRedirect(provider)
+        // return firebase.auth().signInWithPopup(provider)
+        //     .then((result) => {
+        //         console.log('authsuccess!', result)
+        //         return result.user
+        //     })
+        //     .catch(err => {
+        //         console.log('autherror', err)
+        //         return err
+        //     })
+    },
+    logout() {
+        console.log('kicking off the logout...')
+        return firebase.auth().signOut()
     }
 }
