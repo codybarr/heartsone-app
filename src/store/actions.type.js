@@ -1,2 +1,6 @@
+// Cards
 export const FETCH_CARDS = 'fetchCards'
-export const FETCH_CARD = 'fetchCard'
+
+// User
+export const LOGIN = 'login'
+export const LOGOUT = 'logout'

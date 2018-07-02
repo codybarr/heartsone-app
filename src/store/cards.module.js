@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import { CardService } from '@/common/api.service'
-import { FETCH_CARDS, FETCH_CARD } from './actions.type'
-import { FETCH_START, SET_CARDS, SET_CARD } from './mutations.type'
+import { FETCH_CARDS } from './actions.type'
+import { FETCH_START, SET_CARDS } from './mutations.type'
 
 const state = {
     cards: [],
@@ -13,9 +13,6 @@ const state = {
 const getters = {
     cards(state) {
         return state.cards
-    },
-    card(state) {
-        return state.card
     },
     isLoading(state) {
         return state.isLoading
@@ -33,39 +30,15 @@ const actions = {
                 console.log(error)
                 throw new Error(error)
             })
-    },
-    // [FETCH_CARD] ({ commit }, id) {
-    //   commit(FETCH_START)
-    //   return CardService.getAllCards()
-    //     .then(({ data }) => {
-    //       console.log('Data', data)
-    //       commit(SET_CARD, data.find(card => card.dbfId.toString() === id))
-    //     })
-    //     .catch((error) => {
-    //       console.log(error)
-    //       throw new Error(error)
-    //     })
-    // },
-    [FETCH_CARD](context, id) {
-        return CardService.getAllCards()
-            .then(({ data }) => {
-                context.commit(SET_CARD, data.find(card => card.dbfId.toString() === id))
-                return data
-            })
-    },
+    }
 }
 
-/* eslint no-param-reassign: ["error", { "props": false }] */
 const mutations = {
     [FETCH_START](state) {
         state.isLoading = true
     },
     [SET_CARDS](state, cards) {
         state.cards = cards
-        state.isLoading = false
-    },
-    [SET_CARD](state, card) {
-        state.card = card
         state.isLoading = false
     }
 }

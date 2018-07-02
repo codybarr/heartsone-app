@@ -28,25 +28,61 @@
               <a class="nav-link disabled" href="#">Disabled</a>
             </li> -->
             </ul>
-            <!-- <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2"
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
+            <div class="mr-sm-2">
+                <Loader v-if="loadingUser"/>
+                <div v-else>
+                    <div v-if="loggedIn">
+                        <img :src="user.photoURL" class="avatar"/>
+                        <span class="navbar-text p-2">{{ user.email }}</span>
+                        <button @click.prevent="logout"
+                            class="btn btn-primary my-2 my-sm-0"
+                            type="submit">Logout</button>
+                    </div>
+                    <button v-else
+                        @click.prevent="login"
+                        class="btn btn-primary my-2 my-sm-0"
+                        type="submit">Login</button>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import store from '@/store'
+import { LOGIN, LOGOUT } from '@/store/actions.type'
+
+import Loader from '@/components/Loader.vue'
+
 export default {
-    props: ['title']
+    components: {
+        Loader
+    },
+    props: ['title'],
+    computed: {
+        ...mapGetters([
+            'user',
+            'loggedIn',
+            'loadingUser'
+        ])
+    },
+    methods: {
+        login() {
+            store.dispatch(LOGIN)
+        },
+        logout() {
+            store.dispatch(LOGOUT)
+        }
+    }
 }
 </script>
 
 <style lang="scss">
-    // body {
-    //     padding-top: 4rem;
-    // }
+.avatar {
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
 </style>
