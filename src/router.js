@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Search from './views/Search.vue'
-import Decks from './views/Decks.vue'
-import Card from './views/Card.vue'
+import Search from '@/views/Search.vue'
+
+import Decks from '@/views/Decks.vue'
+import PublicDecks from '@/views/decks/PublicDecks.vue'
+import MyDecks from '@/views/decks/MyDecks.vue'
+
+import Card from '@/views/Card.vue'
 
 Vue.use(Router)
 
@@ -15,7 +19,11 @@ const router = new Router({
     {
         path: '/decks',
         name: 'decks',
-        component: Decks
+        component: Decks,
+        children: [
+            { path: '', name: 'publicDecks', component: PublicDecks },
+            { path: 'mine', name: 'myDecks', component: MyDecks }
+        ]
     },
     {
         path: '/card/:id/:name?',

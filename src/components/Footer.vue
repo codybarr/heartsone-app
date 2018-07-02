@@ -14,7 +14,6 @@
 #app {
     display: flex;
     flex-direction: column;
-    padding-top: 60px; // for fixed nav
     height: 100vh;
 }
 .content {

@@ -17,7 +17,7 @@
                 </li>
                 <!-- Other Pages -->
                 <li v-for="currentPage in pagerRange" :key="currentPage"
-                    :class="['page-item', { active: currentPage == page}]">
+                    :class="['page-item', { active: currentPage === page}]">
                     <router-link class="page-link" :to="{query: {page: currentPage}}">
                         {{ currentPage }}
                     </router-link>

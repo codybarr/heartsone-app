@@ -14,29 +14,42 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <!-- <a class="nav-link"
-                        href="#">Home <span class="sr-only">(current)</span>
-                    </a> -->
-                    <router-link to="/" class="nav-link">Search</router-link>
-                </li>
-                <li class="nav-item">
-                    <!-- <a class="nav-link" href="#">Link</a> -->
-                    <router-link to="/decks" class="nav-link">Decks</router-link>
-                </li>
-                <!--             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li> -->
+                <router-link tag="li" to="/" class="nav-item" activeClass="active" exact>
+                    <a class="nav-link">Search</a>
+                </router-link>
+                <router-link tag="li" to="/decks" class="nav-item" activeClass="active">
+                    <a class="nav-link">Decks</a>
+                </router-link>
             </ul>
             <div class="mr-sm-2">
                 <Loader v-if="loadingUser"/>
                 <div v-else>
                     <div v-if="loggedIn">
-                        <img :src="user.photoURL" class="avatar"/>
-                        <span class="navbar-text p-2">{{ user.email }}</span>
-                        <button @click.prevent="logout"
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" 
+                                    href="#"
+                                    id="userDropdown"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <span class="navbar-text p-2">{{ user.email }}</span>
+                                    <img :src="user.photoURL" class="avatar"/>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                    <router-link :to="{ name: 'myDecks' }"
+                                        class="dropdown-item">
+                                        My Decks
+                                    </router-link>
+                                    <div class="dropdown-divider"></div>
+                                    <a @click.prevent="logout" class="dropdown-item" href="#">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- <button @click.prevent="logout"
                             class="btn btn-primary my-2 my-sm-0"
-                            type="submit">Logout</button>
+                            type="submit">Logout</button> -->
                     </div>
                     <button v-else
                         @click.prevent="login"
@@ -79,10 +92,18 @@ export default {
 </script>
 
 <style lang="scss">
+#app {
+    padding-top: 70px; // for fixed nav
+}
+
 .avatar {
     vertical-align: middle;
     width: 25px;
     height: 25px;
     border-radius: 50%;
+}
+
+#userDropdown {
+    padding: 0;
 }
 </style>
