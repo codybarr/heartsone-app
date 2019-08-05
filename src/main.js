@@ -8,7 +8,12 @@ import { FETCH_CARDS } from '@/store/actions.type'
 
 // Font-Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSort, faSortUp, faSortDown, faHeart } from '@fortawesome/free-solid-svg-icons'
+import {
+	faSort,
+	faSortUp,
+	faSortDown,
+	faHeart
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faSort, faSortUp, faSortDown, faHeart)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -25,11 +30,11 @@ import './initFirebase'
 Vue.config.productionTip = false
 
 new Vue({
-    router,
-    store,
-    comments: true,
-    created() {
-        store.dispatch(FETCH_CARDS)
-    },
-    render: h => h(App)
+	router,
+	store,
+	comments: true,
+	created() {
+		store.dispatch(FETCH_CARDS)
+	},
+	render: h => h(App)
 }).$mount('#app')

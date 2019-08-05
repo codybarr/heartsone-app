@@ -11,29 +11,31 @@ import Card from '@/views/Card.vue'
 Vue.use(Router)
 
 const router = new Router({
-    routes: [{
-        path: '/',
-        name: 'search',
-        component: Search
-    },
-    {
-        path: '/decks',
-        name: 'decks',
-        component: Decks,
-        children: [
-            { path: '', name: 'publicDecks', component: PublicDecks },
-            { path: 'mine', name: 'myDecks', component: MyDecks }
-        ]
-    },
-    {
-        path: '/card/:id/:name?',
-        name: 'card',
-        component: Card
-    },
-    {
-        path: '*',
-        redirect: '/'
-    }]
+	routes: [
+		{
+			path: '/',
+			name: 'search',
+			component: Search
+		},
+		{
+			path: '/decks',
+			name: 'decks',
+			component: Decks,
+			children: [
+				{ path: '', name: 'publicDecks', component: PublicDecks },
+				{ path: 'mine', name: 'myDecks', component: MyDecks }
+			]
+		},
+		{
+			path: '/card/:id/:name?',
+			name: 'card',
+			component: Card
+		},
+		{
+			path: '*',
+			redirect: '/'
+		}
+	]
 })
 
 // NProgress settings
@@ -41,19 +43,19 @@ const router = new Router({
 NProgress.configure({ showSpinner: false })
 
 router.beforeResolve((to, from, next) => {
-    // If this isn't an initial page load.
-    if (to.name) {
-        // Start the route progress bar.
-        // eslint-disable-next-line
-        NProgress.start()
-    }
-    next()
+	// If this isn't an initial page load.
+	if (to.name) {
+		// Start the route progress bar.
+		// eslint-disable-next-line
+		NProgress.start()
+	}
+	next()
 })
 
 router.afterEach(() => {
-    // Complete the animation of the route progress bar.
-    // eslint-disable-next-line
-    NProgress.done()
+	// Complete the animation of the route progress bar.
+	// eslint-disable-next-line
+	NProgress.done()
 })
 
 export default router

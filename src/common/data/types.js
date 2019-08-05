@@ -1,6 +1,1 @@
-export default [
-    'Spell',
-    'Minion',
-    'Weapon',
-    'Hero'
-]
+export default ['Spell', 'Minion', 'Weapon', 'Hero']
